@@ -1,7 +1,7 @@
 # CI_CD_Project
 CI_CD_Project
 
-This application is java based web application
+This application is JAVA based web application with MYSQL Database. 
 
 Technologies used -
 
