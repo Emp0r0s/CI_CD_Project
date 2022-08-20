@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db01
+  labels:
+    app: db01
+spec:
+  selector:
+    matchLabels:
+      app: db01
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db01
+    spec:
+      containers:
+        - name: db01
+          image: emporos/prodb:latest
+          args:
+            - "--ignore-db-dir=lost+found"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: vpro-db-data
+          ports:
+            - name: db-port
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: db_pass
+      nodeSelector:
+        zone: us-east-1a
+      volumes:
+        - name: vpro-db-data
+          awsElasticBlockStore:
+            volumeID: vol-08f5460f5da788c51
+            fsType: ext4

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vproapp
+spec:
+  selector:
+    matchLabels:
+      app: vproapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vproapp
+    spec:
+      containers:
+      - name: vproapp
+        image: {{ .Values.appimage}}
+        ports:
+        - name: app-port
+          containerPort: 8080
+      initContainers:
+        - name: init-mydb
+          image: busybox
+          command: ['sh', '-c', 'until nslookup db01; do echo waiting for mydb; sleep 3; done;']
+        - name: init-memcache
+          image: busybox
+          command: ['sh', '-c', 'until nslookup mc01; do echo waiting for mydb; sleep 3; done;']  
