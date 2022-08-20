@@ -6,7 +6,7 @@ This application is java based web application
 Technologies used -
 
 * Git & Github
-* Docker
+* Docker & Docker Compose
 * Jenkins
 * Kubernetes
 * Maven
