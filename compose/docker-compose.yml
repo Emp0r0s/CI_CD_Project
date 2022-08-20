@@ -1,0 +1,36 @@
+version: '3'
+services:
+  db01:
+    image: emporos/prodb:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - vprodbdata:/var/lib/mysql
+    
+  mc01:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  rmq01:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=test
+      - RABBITMQ_DEFAULT_PASS=test
+
+  vproapp:
+    image: emporos/proapp:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - vproappdata:/usr/local/tomcat/webapps
+
+  vproweb:
+    image: emporos/proweb
+    ports:
+      - "80:80"
+volumes:
+  vprodbdata: {}
+  vproappdata: {}
