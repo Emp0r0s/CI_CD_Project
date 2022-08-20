@@ -20,7 +20,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: app-secret
-                key: rmq_pass:
+                key: rmq_pass
           - name:  RABBITMQ_DEFAULT_USER
             value: "test"
         ports:
